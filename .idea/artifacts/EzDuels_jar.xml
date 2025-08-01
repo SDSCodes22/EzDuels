@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="EzDuels:jar">
+    <output-path>$PROJECT_DIR$/../../../Game Making/Minecraft Servers/Minecraft Server/plugins</output-path>
+    <root id="archive" name="EzDuels.jar">
+      <element id="module-output" name="EzDuels" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/yaml/snakeyaml/2.2/snakeyaml-2.2.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>

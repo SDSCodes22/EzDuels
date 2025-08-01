@@ -1,0 +1,81 @@
+name: EzDuels
+version: '1.0.0'
+main: com.ezduels.EzDuelsPlugin
+api-version: '1.21'
+authors: [EzDuels Team]
+description: Advanced dueling plugin for Paper servers
+website: https://github.com/ezduels/EzDuels
+depend: [WorldEdit]
+
+commands:
+  duel:
+    description: Challenge a player to a duel
+    usage: /duel <player>
+    permission: ezduels.duel
+    aliases: [1v1, challenge]
+  duelaccept:
+    description: Accept a duel challenge
+    usage: /duelaccept
+    permission: ezduels.duel
+    aliases: [acceptduel, duelyes]
+  dueldeny:
+    description: Deny a duel challenge
+    usage: /dueldeny
+    permission: ezduels.duel
+    aliases: [denyduel, duelno]
+  betmenu:
+    description: Open the betting menu
+    usage: /betmenu
+    permission: ezduels.bet
+    aliases: [bets, betting]
+  skip:
+    description: Skip the countdown
+    usage: /skip
+    permission: ezduels.duel
+  leavefight:
+    description: Leave the current fight
+    usage: /leavefight
+    permission: ezduels.duel
+    aliases: [forfeit, giveup]
+  cancelfight:
+    description: Cancel the current fight
+    usage: /cancelfight
+    permission: ezduels.duel
+    aliases: [stopduel]
+  prizes:
+    description: View unclaimed prizes
+    usage: /prizes
+    permission: ezduels.prizes
+  spectatefight:
+    description: Spectate a fight
+    usage: /spectatefight
+    permission: ezduels.spectate
+  duelsadmin:
+    description: Admin commands for duels
+    usage: /duelsadmin
+    permission: ezduels.admin
+
+permissions:
+  ezduels.*:
+    description: All EzDuels permissions
+    children:
+      ezduels.duel: true
+      ezduels.bet: true
+      ezduels.prizes: true
+      ezduels.spectate: true
+      ezduels.admin: true
+  ezduels.duel:
+    description: Allows dueling
+    default: true
+  ezduels.bet:
+    description: Allows betting
+    default: true
+  ezduels.prizes:
+    description: Allows viewing prizes
+    default: true
+  ezduels.spectate:
+    description: Allows spectating fights
+    default: true
+  ezduels.admin:
+    description: Admin permissions
+    default: op

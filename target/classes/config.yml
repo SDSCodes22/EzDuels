@@ -1,0 +1,28 @@
+# EzDuels Configuration
+plugin:
+  prefix: "<gray>[<color:#45bbff><b>DUELS</b></color>]</gray>"
+  
+duels:
+  countdown-duration: 30 # seconds
+  bet-menu-duration: 300 # seconds (5 minutes)
+  bet-reminder-interval: 5 # seconds
+  reconnect-grace-period: 120 # seconds (2 minutes)
+  
+prizes:
+  expiration-time: 3600 # seconds (1 hour)
+  reminder-interval: 300 # seconds (5 minutes)
+  
+arenas:
+  default-world: "world"
+  dedicated-world: "duels_world" # optional
+  
+messages:
+  duel-challenge: "<gray>[<color:#45bbff><b>DUELS</b></color>]</gray> <yellow>{challenger}</yellow> has challenged you to a duel!"
+  duel-details: "<gray>Loot Drop: <yellow>{loot}</yellow> | Betting: <yellow>{betting}</yellow> | Arena: <yellow>{arena}</yellow>"
+  duel-accept: "<click:run_command:/duelaccept><hover:show_text:'<green>Click to accept the duel'><green>ACCEPT</green></hover></click><reset><gray> / </gray><click:run_command:/dueldeny><hover:show_text:'<red>Click to deny the duel'><red>DENY</red></hover></click>"
+  
+  bet-reminder: "<gray>[<color:#45bbff><b>DUELS</b></color>]</gray> You have an active bet menu. <click:run_command:/betmenu><hover:show_text:'<green>Click to reopen bet menu'><green>Click here or type /betmenu to reopen</green></hover></click>"
+  
+  countdown: "<yellow>{seconds}s till fight. <click:run_command:/skip><hover:show_text:'<green>Click to skip countdown'>/skip to skip</hover></click></yellow>"
+  
+  prize-reminder: "<gray>[<color:#45bbff><b>DUELS</b></color>]</gray> You have unclaimed prizes. <click:run_command:/prizes><hover:show_text:'<green>Click to view prizes'><green>Use /prizes to view them before they expire</green></hover></click>"
