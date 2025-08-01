@@ -2,11 +2,9 @@
 
 A comprehensive dueling plugin for Paper 1.21+ servers that provides a custom dueling system with inventory-based combat, betting mechanics, arena management, and advanced features.
 ## Known Bugs
-- Put players in adventure mode during countdown
-- Set to full health / hunger before fight
-- Implement tab-completer for /duel
 - If a player logs out during a duel, and it is a cracked server with LibreLogin installed, conflicts may occur
 leading to a) either insecurities to player log-off position or b) the player being stuck in the arena.
+- No command to delete an arena, must do so manually.
 ## Features
 
 - **Custom Duel System**: Players duel using their current inventory (no kits)
@@ -14,7 +12,7 @@ leading to a) either insecurities to player log-off position or b) the player be
 - **Arena Management**: WorldEdit integration for creating and managing duel arenas
 - **Prize System**: Virtual inventory for overflow items with expiration
 - **Statistics Tracking**: Win/loss records for all players
-- **Spectator Mode**: Watch ongoing duels in spectator mode
+- **Spectator Mode**: Watch ongoing duels in spectator mode (NOT COMPLETE)
 - **Modern API**: Built with Adventure API and modern Paper methods
 
 ## Requirements
@@ -49,14 +47,17 @@ If betting is enabled:
 1. After both players accept, a betting GUI opens automatically
 2. Place items you want to wager in your side (left 4 columns for challenger, right 4 columns for target)
 3. Click your confirmation button (bottom row) when ready
-4. Both players must confirm before the duel begins
-5. Use `/betmenu` to reopen the betting interface if closed
+4. Wait for the animation to play. Click anywhere, or close the GUI if you want to cancel.
+5. Both players must confirm before the duel begins
+6. Use `/betmenu` to reopen the betting interface if closed.
+7. The winner of the duel takes all the items!
 
 #### During the Duel
 - A 30-second countdown begins (shown in action bar)
 - Both players can `/skip` to start immediately
 - Fight using your current inventory and items
 - You can place/break blocks, but only ones you placed yourself
+- The arena automatically regenerates after the fight to its original state.
 - Use `/leavefight` to forfeit (you'll lose items/bets if applicable)
 
 #### Prize System
@@ -102,7 +103,6 @@ If betting is enabled:
 | `/leavefight` | Forfeit the current duel | `ezduels.duel` |
 | `/cancelfight` | Cancel a duel before it starts | `ezduels.duel` |
 | `/prizes` | View and claim prize items | `ezduels.prizes` |
-| `/spectatefight` | Spectate an ongoing duel | `ezduels.spectate` |
 
 ### Admin Commands
 | Command | Description | Permission |
@@ -130,53 +130,46 @@ The `config.yml` file allows you to customize various aspects of the plugin:
 ```yaml
 # EzDuels Configuration
 plugin:
-  prefix: "<gradient:#FF6B6B:#4ECDC4>[EzDuels]</gradient>"
-  
+   prefix: "<gray>[<color:#45bbff><b>DUELS</b></color>]</gray>"
+
 duels:
-  countdown-duration: 30 # seconds
-  bet-menu-duration: 300 # seconds (5 minutes)
-  bet-reminder-interval: 5 # seconds
-  reconnect-grace-period: 120 # seconds (2 minutes)
-  
+   countdown-duration: 30 # seconds
+   bet-menu-duration: 300 # seconds (5 minutes)
+   bet-reminder-interval: 5 # seconds
+   reconnect-grace-period: 120 # seconds (2 minutes)
+
 prizes:
-  expiration-time: 3600 # seconds (1 hour)
-  reminder-interval: 300 # seconds (5 minutes)
-  
+   expiration-time: 3600 # seconds (1 hour)
+   reminder-interval: 300 # seconds (5 minutes)
+
 arenas:
-  default-world: "world"
-  dedicated-world: "duels_world" # optional
+   default-world: "world"
+   dedicated-world: "duels_world" # optional
+
+messages:
+   duel-challenge: "<gray>[<color:#45bbff><b>DUELS</b></color>]</gray> <yellow>{challenger}</yellow> has challenged you to a duel!"
+   duel-details: "<gray>Loot Drop: <yellow>{loot}</yellow> | Betting: <yellow>{betting}</yellow> | Arena: <yellow>{arena}</yellow>"
+   duel-accept: "<click:run_command:/duelaccept><hover:show_text:'<green>Click to accept the duel'><green>ACCEPT</green></hover></click><reset><gray> / </gray><click:run_command:/dueldeny><hover:show_text:'<red>Click to deny the duel'><red>DENY</red></hover></click>"
+
+   bet-reminder: "<gray>[<color:#45bbff><b>DUELS</b></color>]</gray> You have an active bet menu. <click:run_command:/betmenu><hover:show_text:'<green>Click to reopen bet menu'><green>Click here or type /betmenu to reopen</green></hover></click>"
+
+   countdown: "<yellow>{seconds}s till fight. <click:run_command:/skip><hover:show_text:'<green>Click to skip countdown'>/skip to skip</hover></click></yellow>"
+
+   prize-reminder: "<gray>[<color:#45bbff><b>DUELS</b></color>]</gray> You have unclaimed prizes. <click:run_command:/prizes><hover:show_text:'<green>Click to view prizes'><green>Use /prizes to view them before they expire</green></hover></click>"
 ```
 
-### Message Customization
-All messages support MiniMessage formatting and can be customized in the config. Messages include click and hover events for better user experience.
 
 ## Data Storage
 
-The plugin stores data in YAML files:
+The plugin stores data in YAML files, so that if you have knowledge of YAML, you can manually :
 - `arenas.yml` - Arena definitions and spawn points
 - `stats.yml` - Player statistics (wins/losses)
-- Prize data is stored in memory and expires automatically
+- Prize data is stored in memory and expires automatically, disallowing players from exploiting
 
-## Duel Mechanics
-
-### Disconnection Handling
-- **Keep Inventory ON + No Betting**: Instant loss for disconnected player
-- **Keep Inventory OFF or Betting Enabled**: 2-minute grace period to reconnect
-
-### Arena Restrictions
-- Players can only place/break blocks they placed themselves
-- Cannot break original arena blocks
-- Combat is confined to arena boundaries
-
-### Betting Rules
-- Items are removed from inventory when both players confirm
-- Winner receives all wagered items
-- If inventory is full, items go to prize system
-- Betting GUI times out after 5 minutes
 
 ## Troubleshooting
 
-### Common Issues
+### Possible Issues you may Encounter
 
 **"Failed to create arena" error**:
 - Ensure you have a WorldEdit selection active
@@ -195,6 +188,7 @@ The plugin stores data in YAML files:
 
 ### Performance Considerations
 - The plugin uses async operations where possible
+- The plugin uses WorldEdit regions for saving Arena States.
 - Arena data is cached in memory for fast access
 - Statistics are saved periodically to prevent data loss
 

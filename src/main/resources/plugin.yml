@@ -2,9 +2,9 @@ name: EzDuels
 version: '${project.version}'
 main: com.ezduels.EzDuelsPlugin
 api-version: '1.21'
-authors: [EzDuels Team]
+authors: [SDSx_]
 description: Advanced dueling plugin for Paper servers
-website: https://github.com/ezduels/EzDuels
+website: https://github.com/@SDSCodes22/
 depend: [WorldEdit]
 
 commands:

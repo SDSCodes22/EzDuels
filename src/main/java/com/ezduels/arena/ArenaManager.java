@@ -130,8 +130,8 @@ public class ArenaManager {
             // Get region bounds
             com.sk89q.worldedit.math.BlockVector3 minVector = region.getMinimumPoint();
             com.sk89q.worldedit.math.BlockVector3 maxVector = region.getMaximumPoint();
-            Location minPoint = new Location(world, minVector.getX(), minVector.getY(), minVector.getZ());
-            Location maxPoint = new Location(world, maxVector.getX(), maxVector.getY(), maxVector.getZ());
+            Location minPoint = new Location(world, minVector.x(), minVector.y(), minVector.z());
+            Location maxPoint = new Location(world, maxVector.x(), maxVector.y(), maxVector.z());
             
             // Create arena (spawn points will be set later)
             Arena arena = new Arena(arenaName, basename, world, minPoint, maxPoint, null, null);
